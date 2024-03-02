@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: login-app
+  annotations:
+    cert-manager.io/cluster-issuer: "acme-issuer"
+   # kubernetes.io/ingress.class: "nginx"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - zphighschool.shop
+    secretName: loginapp-secret
+  rules:
+  - host: "zphighschool.shop"
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: login-app
+            port:
+              number: 7500
+
